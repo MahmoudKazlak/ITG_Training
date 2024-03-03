@@ -1,0 +1,24 @@
+{
+    "product_av": {
+        "Brown": {
+            "38": true,
+            "39": false,
+            "40": true
+        },
+        "Black": {
+            "38": true,
+            "39": true,
+            "40": true
+        },
+        "Node": {
+            "38": false,
+            "39": false,
+            "40": true
+        },
+        "White": {
+            "38": true,
+            "39": true,
+            "40": false
+        }
+    }
+}
