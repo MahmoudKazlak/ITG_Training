@@ -2,16 +2,4 @@
     border-top: 4px solid red;
     margin-top: 10px;
     margin-bottom: 10px;
-    
-}
-#searchResults ul {
-    list-style-type: none; 
-    margin-left: -18%; 
-    background-color: inherit;
-   
-}
-#searchResults li {
-    background-color: inherit;
-    color: white;
-    padding: 5px;
 }
