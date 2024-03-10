@@ -1,44 +1,67 @@
 let lastSearchedUser = '';
 let lastSearchedUserId = '';
+let existingRows = {};
+
 $("#searchForm").submit(function (event) {
     event.preventDefault();
     var searchInput = $("#searchInput").val();
-    //scroll
+
+    //check
     if (searchInput === lastSearchedUser) {
-        var lastRow = $(".col-md-12.text-light:last-of-type");
+        var lastRow = $("#i" + lastSearchedUserId);
         if (lastRow.length > 0) {
-            $('html, body').scrollTop(lastRow.offset().top);
+            $("#searchResults tbody").append(lastRow);
+            $('html, body').animate({
+                scrollTop: lastRow.offset().top
+            }, 0);
         }
+        $("#searchInput").val('');
         return;
     }
-    //fetch
-    fetch("https://api.github.com/users/" + searchInput)
-    .then(response => response.json())
-    .then(response => displaySearchResults(response));
-    //display
-    function displaySearchResults(response) {
-        var searchResults = document.getElementById("searchResults");
-        var searchRow = document.createElement("div");
-        searchRow.classList.add("col-md-12", "text-light");
-        var userId = response['id'];
-        searchRow.setAttribute("id", "i" + userId);
-        if (response['created_at']) { //exist
-            searchRow.innerHTML = `
-                ${response['avatar_url'] ? `<img class="mb-3" style="width:150px" src="${response['avatar_url']}">` : ''}
-                ${response['name'] ? `<p><strong>Name:</strong> ${response['name']}</p>` : ''}
-                ${response['company'] ? `<p><strong>Company:</strong> ${response['company']}</p>` : ''}
-                ${response['email'] ? `<p><strong>Email:</strong> ${response['email']}</p>` : ''}
-                ${response['followers'] !== null ? `<p><strong>Followers:</strong> ${response['followers']}</p>` : ''}
-                ${response['following'] !== null ? `<p><strong>Following:</strong> ${response['following']}</p>` : ''}
-                ${response['public_repos'] !== null ? `<p><strong>Public Repos:</strong> ${response['public_repos']}</p>` : ''}
-                <div class="row">
-                <div class="col-md-12 mt-1 border-success">
-                <hr class="line-edit border-success">
-                </div>
-                </div> `;
-            searchResults.appendChild(searchRow);
-        }
-        lastSearchedUser = searchInput;
-        lastSearchedUserId = userId;
+    //check
+    if (existingRows[searchInput]) {
+        var existingRow = $("#i" + existingRows[searchInput].id);
+        existingRow.appendTo("#searchResults tbody");
+        $('html, body').animate({
+            scrollTop: existingRow.offset().top
+        }, 0);
+        $("#searchInput").val('');
+        return;
     }
+
+    //fetch
+
+    fetch("https://api.github.com/users/" + searchInput) 
+        .then(response => response.json())
+        .then(response => {
+            displaySearchResults(response);
+            existingRows[searchInput] = response; 
+        });
 });
+
+//display
+function displaySearchResults(response) {
+    var searchResults = $("#searchResults tbody");
+    var searchRow = $("<tr>").addClass("");
+    var userId = response['id'];
+    searchRow.attr("id", "i" + userId);
+    if (response['created_at']) { 
+        searchRow.append(`
+            <td>${response['avatar_url'] ? `<img style="width:100%"  src="${response['avatar_url']}">` : ''}</td>
+            <td>${response['name'] ? response['name'] : ''}</td>
+            <td>${response['company'] ? response['company'] : ''}</td>
+            <td>${response['email'] ? response['email'] : ''}</td>
+            <td>${response['followers'] !== null ? response['followers'] : ''}</td>
+            <td>${response['following'] !== null ? response['following'] : ''}</td>
+            <td>${response['public_repos'] !== null ? response['public_repos'] : ''}</td>
+        `);
+        searchResults.append(searchRow);
+        $('html, body').animate({
+            scrollTop: searchRow.offset().top
+        }, 0);
+    }
+    //clear
+    $("#searchInput").val('');
+    lastSearchedUser = searchInput;
+    lastSearchedUserId = userId;
+}
