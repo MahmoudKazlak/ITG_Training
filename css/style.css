@@ -1,16 +1,19 @@
-table, th, td {
-    border: 2px solid black !important;
-    border-collapse: collapse !important;
-  }
-.table-striped tbody tr:nth-child(even) {
-    background-color: pink;
+h6{
+    color: black;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: larger;
+}
+li:hover{
+    background-color: lightgray;
+}
+.list-group-item {
+    position: relative; 
 }
 
-.table-striped tbody tr:nth-child(odd) {
-    background-color: lightblue !important;
+.fa-check {
+    position: absolute;
+    left: 1%; 
+    top: 50%; 
+    transform: translateY(-50%); 
 }
-
-.table-striped thead {
-    background-color: pink;
-}
-
