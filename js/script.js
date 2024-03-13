@@ -1,37 +1,74 @@
-$(document).ready(function() {
-    function displayCheck(element) {
-        $(element).find('.fa-check').addClass("d-block").removeClass("d-none");
-        $(element).css("color","white");    
-        $(element).css("background-color", "gray");
-        $(element).css("text-decoration", "line-through");
-    }    
-    function deleteTask(element) {
-        $(element).closest('li').remove();
-    }
-    $("#myToDoList").submit(function(event) {
-        event.preventDefault();
-        var newTaskCont = $("#newTask").val().trim();
-        if(newTaskCont.length > 0) {
-            $("#list-group").append(`
-                <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
-                    <div class="d-flex align-items-center">
-                        <i class="fa-solid fa-check text-success d-none"></i>
-                        <span class="ms-5">${newTaskCont}</span>
-                    </div>
-                    <a href="#!" class="delete-task" data-mdb-toggle="tooltip" title="Remove item">
-                        <i class="fas fa-times text-primary"></i>
-                    </a>
-                </li>
-            `);
-            $("#newTask").val("");
+var obj = {
+  "results": [
+    {
+      "productID": "KL2432",
+      "productName": "Hugo Boss men's suit",
+      "productPrice": 2500,
+      "productPriceFormatted": "DKK 2.500,00",
+      "inStock": true,
+      "productImg": "https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main",
+      "href": "/riley-heeled-buckle-boots/shoes-accessories/new-arrivals/572383?uniqueId=572383",
+      "swatches": [
+        {
+          "swatchDefAttCode": "BLCK",
+          "swatchName": "Black",
+          "swatchAttrName": "color",
+          "img": { "src": "https://akamai-scene7.garnethill.com/is/image/garnethill/48611_BLCK_SW?$SLI_MiniSwatch$" }
         }
-    });
+      ]
+    },
+    {
+      "productID": "KL2432",
+      "productName": "Hugo Boss men's suit",
+      "productPrice": 2500,
+      "productPriceFormatted": "DKK 2.500,00",
+      "inStock": true,
+      "productImg": "https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main",
+      "href": "/riley-heeled-buckle-boots/shoes-accessories/new-arrivals/572383?uniqueId=572383",
+      "swatches": [
+        {
+          "swatchDefAttCode": "SADD",
+          "swatchName": "Distressed Saddle",
+          "swatchAttrName": "color",
+          "img": { "src": "https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD_SW?$SLI_MiniSwatch$" }
+        },
+        {
+          "swatchDefAttCode": "Mahogany",
+          "swatchName": "Mahogany",
+          "swatchAttrName": "color",
+          "img": { "src": "https://akamai-scene7.garnethill.com/is/image/garnethill/49187_MAHO_SW?$SLI_MiniSwatch$" }
+        }
+      ]
+    }
+  ]
+};
 
-    $("#list-group").on("click", "li", function() {
-        displayCheck(this);
-    });
+var productContainer = document.getElementById("productContainer");
 
-    $("#list-group").on("click", ".delete-task", function(event) {
-        deleteTask(this);
-    });
+obj.results.forEach(function (product) {
+  if (product.inStock) {
+    var productCard = document.createElement("div");
+    productCard.classList.add("col-lg-4", "product-card");
+    productCard.setAttribute("role", "listitem");
+    productCard.innerHTML = `
+            <div class="card">
+            <div class="flex-sm-row  d-sm-flex d-lg-block">
+              <div class="col-lg-12 col-sm-6">
+                <img src="${product.productImg}" class="card-img-top" alt="${product.productName}">
+              </div>
+              <div class="col-lg-12 col-sm-6">
+                <div class="card-body">
+                  <h5 class="card-title">${product.productName}</h5>
+                  <p class="card-text mt-4">Price: ${product.productPriceFormatted}</p>
+                  <div class="d-flex flex-wrap mt-4">
+                    ${product.swatches.map(swatch => `<img src="${swatch.img.src}" class="swatch-img" alt="${swatch.swatchName}">`).join('')}
+                  </div>
+                  <a href="${product.href}" class="btn btn-primary mt-5">Buy Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+            `;
+    productContainer.appendChild(productCard);
+  }
 });

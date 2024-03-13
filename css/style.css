@@ -1,19 +1,13 @@
-h6{
-    color: black;
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: larger;
-}
-li:hover{
-    background-color: lightgray;
-}
-.list-group-item {
-    position: relative; 
+body {
+    background-color: darkgray;
 }
 
-.fa-check {
-    position: absolute;
-    left: 1%; 
-    top: 50%; 
-    transform: translateY(-50%); 
+.product-card {
+    margin-bottom: 20px;
+}
+
+.swatch-img {
+    width: 50px;
+    height: auto;
+    margin-right: 5px;
 }
