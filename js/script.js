@@ -36,25 +36,27 @@ var obj = {
   }]
 };
 var productContainer = document.getElementById("productContainer");
+
 obj.results.forEach(function (product) {
   if (product.inStock) {
     var productCard = document.createElement("div");
     productCard.classList.add("col-lg-4", "product-card");
     productCard.setAttribute("role", "listitem"); 
     productCard.setAttribute("tabindex", "0");
+
     productCard.innerHTML = `
       <div class="card">
         <figure class="card-img-top-container">
           <img
             src="${product.productImg}"
             class="card-img-top"
-            alt="${product.productName}"
-            aria-label="This image is describing the ${product.productName} "
-            aria-hidden="false">
+            alt="${product.productName} image"
+            aria-label="This image is describing the ${product.productName}"
+            tabindex="0">
         </figure>
         <div class="card-body">
-          <h5 class="card-title">${product.productName}</h5>
-          <p class="card-text mt-4">Price: ${product.productPriceFormatted}</p>
+          <h5 class="card-title" tabindex="0">${product.productName}</h5>
+          <p class="card-text mt-4" tabindex="0">Price: ${product.productPriceFormatted}</p>
           <div class="d-flex flex-wrap mt-4">
             ${product.swatches.map(swatch => `
               <img
@@ -63,13 +65,14 @@ obj.results.forEach(function (product) {
                 alt="${swatch.swatchName} swatch"
                 aria-label="Color ${swatch.swatchName}"
                 data-color="${swatch.swatchDefAttCode}"
-              >
+                tabindex="0">
             `).join("")}
           </div>
-          <a href="${product.href}" class="btn btn-primary mt-5" aria-label="Buy ${product.productName} now">Buy Now</a>
+          <a href="${product.href}" class="btn btn-primary mt-5" aria-label="Buy ${product.productName} now button" tabindex="0">Buy Now</a>
         </div>
       </div>
     `;
+
     productContainer.appendChild(productCard);
   }
 });
