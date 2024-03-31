@@ -6,7 +6,9 @@ body {
    
     
 }
-
+#productContainer{
+    cursor: pointer;
+}
 .product-card {
     margin-bottom: 20px;
 }
