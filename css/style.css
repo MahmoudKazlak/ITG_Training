@@ -1,18 +1,12 @@
 body {
     background-color: #a9a9a9;
 }
-
-.container-fluid {
-   
-    
-}
-#productContainer{
+#productImg{
     cursor: pointer;
 }
 .product-card {
     margin-bottom: 20px;
 }
-
 .swatch-img {
     width: 50px;
     height: auto;
